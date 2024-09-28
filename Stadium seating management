@@ -1,0 +1,102 @@
+class StadiumSeating:
+    def __init__(self, rows, cols):
+        """
+        Initializes the seating arrangement with a specified number of rows and columns.
+        Each seat is initially available (marked with a 0).
+        """
+        self.rows = rows
+        self.cols = cols
+        self.seats = [[0 for _ in range(cols)] for _ in range(rows)]
+
+    def display_seating(self):
+        """
+        Displays the current seating arrangement.
+        0 indicates an available seat, and 1 indicates a reserved seat.
+        """
+        print("\nCurrent Seating Arrangement:")
+        for row in self.seats:
+            print(" ".join(str(seat) for seat in row))
+
+    def reserve_seat(self, row, col):
+        """
+        Reserves a seat if it is available. Marks the seat with a 1.
+        """
+        if row >= self.rows or col >= self.cols:
+            print("Invalid seat position!")
+            return
+        
+        if self.seats[row][col] == 1:
+            print(f"Seat ({row}, {col}) is already reserved.")
+        else:
+            self.seats[row][col] = 1
+            print(f"Seat ({row}, {col}) reserved successfully.")
+
+    def cancel_reservation(self, row, col):
+        """
+        Cancels a reservation. Marks the seat with a 0.
+        """
+        if row >= self.rows or col >= self.cols:
+            print("Invalid seat position!")
+            return
+        
+        if self.seats[row][col] == 0:
+            print(f"Seat ({row}, {col}) is not reserved.")
+        else:
+            self.seats[row][col] = 0
+            print(f"Reservation for seat ({row}, {col}) has been canceled.")
+
+    def check_availability(self, row, col):
+        """
+        Checks if a specific seat is available.
+        """
+        if row >= self.rows or col >= self.cols:
+            print("Invalid seat position!")
+            return False
+        
+        if self.seats[row][col] == 0:
+            print(f"Seat ({row}, {col}) is available.")
+            return True
+        else:
+            print(f"Seat ({row}, {col}) is reserved.")
+            return False
+
+
+# Function to interact with the user
+def main():
+    rows = int(input("Enter the number of rows: "))
+    cols = int(input("Enter the number of columns: "))
+    stadium = StadiumSeating(rows, cols)
+
+    while True:
+        print("\nMenu:")
+        print("1. Display seating arrangement")
+        print("2. Reserve a seat")
+        print("3. Cancel a reservation")
+        print("4. Check seat availability")
+        print("5. Exit")
+        
+        choice = input("Choose an option: ")
+
+        if choice == "1":
+            stadium.display_seating()
+        elif choice == "2":
+            row = int(input("Enter row number to reserve: "))
+            col = int(input("Enter column number to reserve: "))
+            stadium.reserve_seat(row, col)
+        elif choice == "3":
+            row = int(input("Enter row number to cancel: "))
+            col = int(input("Enter column number to cancel: "))
+            stadium.cancel_reservation(row, col)
+        elif choice == "4":
+            row = int(input("Enter row number to check: "))
+            col = int(input("Enter column number to check: "))
+            stadium.check_availability(row, col)
+        elif choice == "5":
+            print("Exiting...")
+            break
+        else:
+            print("Invalid option, please try again.")
+
+# Run the program
+if __name__ == "__main__":
+    main()
